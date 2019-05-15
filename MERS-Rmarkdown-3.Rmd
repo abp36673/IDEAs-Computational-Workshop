@@ -1,0 +1,35 @@
+---
+title: "MERS markdown"
+author: "Alexandria Purcell"
+date: "May 15, 2019"
+output: html_document
+---
+##Processing Mers Data
+
+```{r message=FALSE,warning=FALSE}
+library(lubridate)
+library(ggplot2)
+library(plotly)
+mers<-read.csv('cases.csv')
+mers$hospitalized[890]<-c('2015-02-20')
+mers<-mers[-471,]
+mers$onset2<-ymd(mers$onset)
+mers$hospitalized2<-ymd(mers$hospitalized)
+```
+
+
+##MERs Data Analysis 
+```{r}
+day0<-min(na.omit(mers$onset2))
+mers$epi.day<-as.numeric(mers$onset2-day0)
+```
+
+## R Markdown-MERS 
+Plotted the epidemic day in relation to the case count for each day. 
+
+```{r echo=TRUE, warning=FALSE}
+epi.curve<-ggplot(data=mers)+geom_bar(mapping = aes(x=epi.day))+labs(x='Epidemic Day', y='Case count', title='Global count of MERS cases by date of symptom onset', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+ggplotly(epi.curve)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
