@@ -24,6 +24,7 @@ day0<-min(na.omit(mers$onset2))
 mers$epi.day<-as.numeric(mers$onset2-day0)
 ```
 
+
 ## R Markdown-MERS 
 Plotted the epidemic day in relation to the case count for each day. 
 
